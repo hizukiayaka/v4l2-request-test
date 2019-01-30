@@ -16,7 +16,7 @@
 
 # Tools
 
-CC = gcc
+CC = aarch64-poky-linux-gcc  -march=armv8-a+simd+crc -mcpu=cortex-a53 --sysroot=/home/randy/workspace/rk3328/tools/sysroots/aarch64-poky-linux
 
 # Project
 
