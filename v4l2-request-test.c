@@ -39,10 +39,10 @@
 
 struct format_description formats[] = {
 	{
-		.description		= "NV12 YUV",
-		.v4l2_format		= V4L2_PIX_FMT_NV12,
+		.description		= "NV12M YUV",
+		.v4l2_format		= V4L2_PIX_FMT_NV12M,
 		.v4l2_buffers_count	= 1,
-		.v4l2_mplane		= false,
+		.v4l2_mplane		= true,
 		.drm_format		= DRM_FORMAT_NV12,
 		.drm_modifier		= DRM_FORMAT_MOD_NONE,
 		.planes_count		= 2,
@@ -194,7 +194,7 @@ static void setup_config(struct config *config)
 	config->video_path = strdup("/dev/video0");
 	config->media_path = strdup("/dev/media0");
 	config->drm_path = strdup("/dev/dri/card0");
-	config->drm_driver = strdup("sun4i-drm");
+	config->drm_driver = strdup("rockchip");
 
 	config->preset_name = strdup("bbb-mpeg2");
 	config->slices_filename_format = strdup("slice-%d.dump");
