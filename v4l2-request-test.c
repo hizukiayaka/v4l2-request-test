@@ -41,7 +41,7 @@ struct format_description formats[] = {
 	{
 		.description		= "NV12M YUV",
 		.v4l2_format		= V4L2_PIX_FMT_NV12M,
-		.v4l2_buffers_count	= 1,
+		.v4l2_buffers_count	= 2,
 		.v4l2_mplane		= true,
 		.drm_format		= DRM_FORMAT_NV12,
 		.drm_modifier		= DRM_FORMAT_MOD_NONE,
@@ -401,6 +401,7 @@ int main(int argc, char *argv[])
 		goto error;
 	}
 
+#if 0
 	rc = display_engine_start(drm_fd, width, height, selected_format,
 				  video_buffers, config.buffers_count,
 				  &gem_buffers, &display_setup);
@@ -408,6 +409,7 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "Unable to start display engine\n");
 		goto error;
 	}
+#endif
 
 	if (config.fps > 0)
 		frame_time = 1000000 / config.fps;
@@ -522,12 +524,14 @@ frame_display:
 		v4l2_index = display_index % config.buffers_count;
 		clock_gettime(CLOCK_MONOTONIC, &display_before);
 
+#if 0
 		rc = display_engine_show(drm_fd, v4l2_index, video_buffers,
 					 gem_buffers, &display_setup);
 		if (rc < 0) {
 			fprintf(stderr, "Unable to display video frame\n");
 			goto error;
 		}
+#endif
 
 		clock_gettime(CLOCK_MONOTONIC, &display_after);
 
@@ -570,11 +574,13 @@ frame_display:
 		goto error;
 	}
 
+#if 0
 	rc = display_engine_stop(drm_fd, gem_buffers, &display_setup);
 	if (rc < 0) {
 		fprintf(stderr, "Unable to stop display engine\n");
 		goto error;
 	}
+#endif
 
 	rc = 0;
 	goto complete;
