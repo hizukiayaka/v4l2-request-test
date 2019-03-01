@@ -224,6 +224,7 @@ int main(int argc, char *argv[])
 	struct video_buffer *video_buffers;
 	struct video_setup video_setup;
 	struct gem_buffer *gem_buffers;
+	struct file_buffer *file_buffers;
 	struct display_setup display_setup;
 	struct media_device_info device_info;
 	struct frame frame;
@@ -409,6 +410,13 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "Unable to start display engine\n");
 		goto error;
 	}
+#else
+	rc = file_dump_start(selected_format, video_buffers,
+			     config.buffers_count, &file_buffers);
+	if (rc < 0) {
+		fprintf(stderr, "Unable to map v4l2 buffers\n");
+		goto error;
+	}
 #endif
 
 	if (config.fps > 0)
@@ -531,6 +539,12 @@ frame_display:
 			fprintf(stderr, "Unable to display video frame\n");
 			goto error;
 		}
+#else
+		rc = file_dump_image(v4l2_index, file_buffers);
+		if (rc < 0) {
+			fprintf(stderr, "Unable to dump video frame\n");
+			goto error;
+		}
 #endif
 
 		clock_gettime(CLOCK_MONOTONIC, &display_after);
@@ -578,6 +592,12 @@ frame_display:
 	rc = display_engine_stop(drm_fd, gem_buffers, &display_setup);
 	if (rc < 0) {
 		fprintf(stderr, "Unable to stop display engine\n");
+		goto error;
+	}
+#else
+	rc = file_engine_stop(file_buffers, config.buffers_count);
+	if (rc < 0) {
+		fprintf(stderr, "Unable to destrop file engine\n");
 		goto error;
 	}
 #endif

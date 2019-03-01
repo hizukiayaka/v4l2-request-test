@@ -198,6 +198,15 @@ struct display_setup {
 	struct display_properties_ids properties_ids;
 };
 
+/* file */
+struct file_buffer {
+	void *data[4];
+	unsigned int size[4];
+	unsigned int fds[4];
+	unsigned int offsets[4];
+	unsigned int planes_count;
+};
+
 /*
  * Functions
  */
@@ -248,4 +257,11 @@ int display_engine_show(int drm_fd, unsigned int index,
 			struct gem_buffer *buffers,
 			struct display_setup *setup);
 
+
+/* File */
+int file_dump_start(struct format_description *format,
+		    struct video_buffer *video_buffers, unsigned int count,
+		    struct file_buffer **buffers);
+int file_engine_stop(struct file_buffer *buffers, int count);
+int file_dump_image(unsigned int index, struct file_buffer *buffers);
 #endif
