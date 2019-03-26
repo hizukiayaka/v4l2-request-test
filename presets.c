@@ -45,6 +45,10 @@ static struct frame bbb_h264_all_i_32_frames[] = {
 #include "data/bbb-h264-all-i-32/frames.h"
 };
 
+static struct frame bbb_h264_all_i_rk_frames[] = {
+#include "data/bbb-h264-all-i-rk/frames.h"
+};
+
 static struct frame bbb_h264_32_frames[] = {
 #include "data/bbb-h264-32/frames.h"
 };
@@ -113,6 +117,18 @@ static struct preset presets[] = {
 		.buffers_count = 16,
 		.frames = bbb_h264_all_i_32_frames,
 		.frames_count = ARRAY_SIZE(bbb_h264_all_i_32_frames),
+	},
+	{
+		.name = "bbb-h264-all-i-rk",
+		.description = "big_buck_bunny_480p_H264_AAC_25fps_1800K.MP4",
+		.license = "Creative Commons Attribution 3.0",
+		.attribution = "Blender Foundation | www.blender.org",
+		.width = 854,
+		.height = 480,
+		.type = CODEC_TYPE_H264,
+		.buffers_count = 16,
+		.frames = bbb_h264_all_i_rk_frames,
+		.frames_count = ARRAY_SIZE(bbb_h264_all_i_rk_frames),
 	},
 	{
 		.name = "bbb-h264-high-32",
